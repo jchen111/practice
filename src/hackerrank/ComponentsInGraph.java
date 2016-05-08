@@ -12,10 +12,12 @@ public class ComponentsInGraph {
     //key: candidates of the set, val: sets in LinkedLists
     static HashMap<Integer,LinkedList<Integer>> sets = new HashMap<Integer,LinkedList<Integer>>();
 
+    //findSet O(1)
     static int findSet(int x) {
         return candidates[x];
     }
 
+    //createSet O(1)
     static void createSet(int x) {
         LinkedList<Integer> set = new LinkedList<Integer>();
         set.add(x);
@@ -23,14 +25,20 @@ public class ComponentsInGraph {
         candidates[x] = x;
     }
 
+
     static void mergeSet(int x, int y) {
         int x_parent = findSet(x);
         int y_parent = findSet(y);
         int new_key = Math.max(x_parent,y_parent);
         sets.get(x_parent).addAll(sets.get(y_parent));
-        //remove the merged set
+        /**
+         * remove the merged set
+         */
         sets.remove(y_parent);
-        //update the candidate for all the elements in the new set
+        /**
+         update the candidate for all the elements in the new set
+         O(N)
+         */
         for(Integer i:sets.get(x_parent)) {
             candidates[i] = new_key;
         }
@@ -52,7 +60,9 @@ public class ComponentsInGraph {
             if(candidates[B] ==0){
                 createSet(B);
             }
-
+            /**
+             * O(N^2)
+             */
             if(findSet(G) != findSet(B)) {
                 mergeSet(G,B);
             }
