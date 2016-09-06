@@ -3,3 +3,6 @@
 .project
 Cracking_the_Coding_Interview.iml
 bin
+*.iml
+build
+out
