@@ -30,6 +30,7 @@ public class QuickSort {
                 arr[j] = tmp;
                 i++;
                 j--;
+                printArray(arr);
             }
 
             if(left < i) {
@@ -44,8 +45,14 @@ public class QuickSort {
 
     }
 
+    public static void printArray(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+
     public static void main(String[] args) {
-        while(true) {
             Scanner sc = new Scanner(System.in);
             int N = sc.nextInt();
             int[] arr = new int[N];
@@ -53,9 +60,8 @@ public class QuickSort {
                 arr[i] = sc.nextInt();
             }
             quickSort(arr, 0, N - 1);
-            for (int i = 0; i < N; i++) {
-                System.out.print(arr[i] + " ");
-            }
-        }
+//            for (int i = 0; i < N; i++) {
+//                System.out.print(arr[i] + " ");
+//            }
     }
 }
