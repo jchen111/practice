@@ -1,7 +1,4 @@
 package hackerrank;
-
-import org.omg.CORBA.INTERNAL;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -24,6 +21,9 @@ public class QuickSort {
         partition(arr);
     }
 
+    public static void sorting(int[] ar) {
+
+    }
 
 
     public static void partition(int[] arr) {
