@@ -33,7 +33,7 @@ public class QuickSort {
                 printArray(arr);
             }
 
-            if(left < i) {
+            if(left < j) {
                 quickSort(arr, left, j);
             }
 
