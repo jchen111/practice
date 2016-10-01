@@ -7,13 +7,14 @@ public class MergeSortedArray {
         while(i<Blength && j<Alength+Blength){
         	if(B[i]<A[j]){
         		m+=1;
-        		int tmp1 = A[j];
+				// shifting the A[] one place to the right to make space for B[i]
+        		int tmp1 = A[j]; //tmp1 hosting the previous place value
         		for(int k=j+1;k<m;k++){
         			int tmp2 = tmp1;
         			tmp1 = A[k];
         			A[k] = tmp2;
         		}
-        		A[j] = B[i];
+        		A[j] = B[i]; // placing B[i]
         		++i;
         		++j;
         	}else{

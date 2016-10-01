@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 public class TwoSum {
@@ -13,8 +15,8 @@ public class TwoSum {
 		for(int i=0;i<numbers.length;i++){
 			target-=numbers[i];
 			if(table.containsKey(target) && table.get(target)>i){
-				output[0] = Math.min(i, table.get(target))+1;
-				output[1] = Math.max(i, table.get(target))+1;
+				output[0] = Math.min(i, table.get(target));
+				output[1] = Math.max(i, table.get(target));
 				break;
 			}else{
 				target = copytarget;
@@ -22,6 +24,7 @@ public class TwoSum {
 		}
 		return output;
 	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
         int[] numbers = {0,0};
