@@ -8,7 +8,7 @@ public class MergeTwoSortedList {
 		ListNode pre = head;//pre will always stay in the air
 		LinkedList<ListNode> list = new LinkedList<ListNode>();
 		while(head1!=null && head2!=null){
-			if(head1.val<head2.val){
+			if(head1.val < head2.val){
 				pre.next = head1;
 				head1 = head1.next;
 			}else{
@@ -17,12 +17,12 @@ public class MergeTwoSortedList {
 			}
 			pre = pre.next;
 		}
-		while(head1!=null){
+		while(head1 != null){
 			pre.next = head1;
 			head1 = head1.next;
 			pre = pre.next;
 		}
-		while(head2!=null){
+		while(head2 != null){
 			pre.next = head2;
 			head2 = head2.next;
 			pre = pre.next;

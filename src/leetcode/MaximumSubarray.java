@@ -9,13 +9,13 @@ public class MaximumSubarray {
         }
         int currentsum = A[0];
         int maxsum = A[0];
-        for(int i=1;i<A.length;i++){
-        	if(currentsum+A[i]<A[i]){
+        for(int i = 1; i < A.length; i++){
+        	if(currentsum+A[i] < A[i]){
         		currentsum = A[i];
         	}else{
-        		currentsum+=A[i];
+        		currentsum += A[i];
         	}
-        	if(currentsum>maxsum){
+        	if(currentsum > maxsum){
         		maxsum = currentsum;
         	}
         }

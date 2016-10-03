@@ -27,6 +27,23 @@ public class ValidateBinarySearchTree {
         	return false;
         }
     }
+
+    public boolean isValidBST3(TreeNode root) {
+		long maxVal = Long.MAX_VALUE;
+		long minVal = Long.MIN_VALUE;
+		return doValidBST(root,maxVal,minVal);
+	}
+
+	public boolean doValidBST(TreeNode root, long maxVal, long minVal){
+		if(root ==  null){
+			return true;
+		}
+		if(root.val < maxVal && root.val > minVal){
+			return doValidBST(root.right,maxVal,root.val) && doValidBST(root.left, root.val, minVal);
+		}else{
+			return false;
+		}
+	}
 	
 	public boolean isValidBST2(TreeNode root) {
         if(root==null){
