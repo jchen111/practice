@@ -80,7 +80,7 @@ public class main {
 			list.add(head2);
 			head2 = head2.next;
 		}
-//		for(int i=0;i<list.size()-1;i++){
+//		for(int i=0;i<list.capacity()-1;i++){
 //			list.get(i).next = list.get(i+1);
 //		}
 		ListNode output = list.getFirst();
@@ -222,8 +222,8 @@ public class main {
 //			System.out.println(i.next());
 //		}
 //		List<List<Integer>> result = password4(2,3,5,3);
-//		for(int i=0;i<result.size();i++){
-//			for(int j=0;j<result.get(i).size();j++){
+//		for(int i=0;i<result.capacity();i++){
+//			for(int j=0;j<result.get(i).capacity();j++){
 //				System.out.print(result.get(i).get(j)+" ");
 //			}
 //			System.out.println();

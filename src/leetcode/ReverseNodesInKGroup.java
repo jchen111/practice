@@ -27,7 +27,7 @@ public class ReverseNodesInKGroup {
             index++;
         }
 
-        if(pointer == null && index <=k) // if k is bigger than list size, just return origin list
+        if(pointer == null && index <=k) // if k is bigger than list capacity, just return origin list
             return head;
 
         ListNode nextStart = pointer;

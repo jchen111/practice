@@ -6,7 +6,7 @@ public class FirstMissingPositive {
 	        return 1;
 	    }
 
-	    // Put the corresponding positive value in the index that equals to its value
+	    // Put the corresponding positive value in the size that equals to its value
 	    int len = A.length;
 	    for (int i = 0; i < len;) {
 	        int num = A[i];
@@ -18,7 +18,7 @@ public class FirstMissingPositive {
 	        }
 	    }
 
-	    // Scan the array to find the first value that is not equal to its index, then it is the missing value
+	    // Scan the array to find the first value that is not equal to its size, then it is the missing value
 	    // Test small examples first
 	    int missingValue = A[0] == len ? len+1 : len;
 	    for (int i = 1; i < len; ++i) {
