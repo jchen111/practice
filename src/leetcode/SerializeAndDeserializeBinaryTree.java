@@ -5,18 +5,21 @@ import CC150.TreeNode;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Scanner;
+import java.util.Scanner;
 
 /**
- * Created by jiaqichen on 10/10/16.
+ * Created by z001ktb on 10/10/16.
  */
 public class SerializeAndDeserializeBinaryTree {
-    public String serialize(TreeNode root){
+
+    public static String serialize(TreeNode root){
         StringBuilder sb = new StringBuilder();
         buildString(root,sb);
         return sb.toString();
     }
 
-    public void buildString(TreeNode root, StringBuilder sb){
+    public static void buildString(TreeNode root, StringBuilder sb){
         if(root == null){
             sb.append("X").append(",");
         }else{
@@ -26,13 +29,13 @@ public class SerializeAndDeserializeBinaryTree {
         }
     }
 
-    public TreeNode deserialize(String str){
+    public static TreeNode deserialize(String str){
         Deque<String> deque = new LinkedList<String>();
         deque.addAll(Arrays.asList(str.split(",")));
         return buildTree(deque);
     }
 
-    public TreeNode buildTree(Deque<String> nodes){
+    public static TreeNode buildTree(Deque<String> nodes){
         String tmp = nodes.remove();
         if(tmp.equals("X")){
             return null;
@@ -41,5 +44,18 @@ public class SerializeAndDeserializeBinaryTree {
         node.left = buildTree(nodes);
         node.right = buildTree(nodes);
         return node;
+    }
+
+    public static void main(String[] args){
+        Scanner sc =  new Scanner(System.in);
+        String str = sc.next();
+        TreeNode t1 = new TreeNode(-1);
+        TreeNode t2 = new TreeNode(-1);
+        TreeNode t3 = new TreeNode(-1);
+        t1.right = t2;
+        t2.right = t3;
+        System.out.println(serialize(t1));
+
+        deserialize(serialize(t1));
     }
 }

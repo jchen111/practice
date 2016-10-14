@@ -3,7 +3,11 @@ package leetcode;
 import java.util.Scanner;
 
 /**
+<<<<<<< Updated upstream
  * Created by jiaqichen on 10/3/16.
+=======
+ * Created by z001ktb on 10/3/16.
+>>>>>>> Stashed changes
  */
 public class ExcelSheetColumnTitle {
 
