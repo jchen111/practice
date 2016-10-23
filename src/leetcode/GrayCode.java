@@ -1,54 +1,65 @@
 package leetcode;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Scanner;
 
 public class GrayCode {
-    public static List<Integer> grayCode(int n) {
-    	if(n==0) return new ArrayList<Integer>();
-    	List<List<Integer>> raw = generate(n);
-        List<Integer> result = new ArrayList<Integer>();
-        for(int i=0;i<raw.size();i++){
-        	int number = 0;
-        	int digit=0;
-        	for(int j=raw.get(i).size()-1; j>=0; j--){
-        		number+=raw.get(i).get(j)*Math.pow(2, digit);
-        		digit+=1;
-        	}
-        	result.add(number);
-        }
-        return result;
-    }
-	public static List<List<Integer>> generate(int n){
-		return helper(n-1,n);
+	static public HashSet<Integer> set;
+	public static List<Integer> grayCode(int n) {
+		set = new HashSet<Integer>();
+		List<Integer> list = new ArrayList<Integer>();
+		int[] bits = new int[n];
+		set.add(0);
+		list.add(0);
+		helper(bits,bits.length-1,n,list);
+		return list;
 	}
-	public static List<List<Integer>> helper(int index, int n){
-		List<List<Integer>> list = new ArrayList<List<Integer>>();
-		if(index==0){
-			List<Integer> sublist;
-			for(int i=0;i<2;i++){
-				sublist = new ArrayList<Integer>();
-				sublist.add(i);
-				list.add(sublist);
-			}
-			return list;
+	public static void helper(int[] bits, int index, int n, List<Integer> list){
+		if(set.size() == Math.pow(2,n)){
+			return;
 		}
-		list = helper(index-1,n);
-		List<List<Integer>> morelist = new ArrayList<List<Integer>>();
-		for(int i=0;i<list.size();i++){
-			List<Integer> sublist ;
-			for(int j=0;j<2;j++){
-				sublist = new ArrayList<Integer>();
-				sublist.addAll(list.get(i));
-				sublist.add(j);
-				morelist.add(sublist);
+		if(index < 0){
+			index = bits.length - 1;
+		}
+
+		if(bits[index] == 0){
+			bits[index] = 1;
+			if(set.contains(toInt(bits))){
+				bits[index] = 0;
+			}
+		}else{
+			bits[index] = 0;
+			if(set.contains(toInt(bits))){
+				bits[index] = 1;
 			}
 		}
-		return morelist;
+
+		int tmp = toInt(bits);
+		if(set.add(tmp)){
+			list.add(tmp);
+			helper(bits,bits.length-1,n,list);
+		}else{
+			helper(bits,index-1,n,list);
+		}
 	}
+
+	public static int toInt(int[] bits){
+		int sum = 0;
+		int n = 0;
+		for(int i = bits.length - 1; i >= 0; i--){
+			sum += (bits[i] * Math.pow(2,n));
+			n++;
+		}
+		return sum;
+	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		List<Integer> result = grayCode(2);
+		Scanner sc = new Scanner(System.in);
+		int N = sc.nextInt();
+		List<Integer> result = grayCode(N);
 		for(int i=0;i<result.size();i++){
 			System.out.print(result.get(i)+" ");
 		}
