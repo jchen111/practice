@@ -1,7 +1,5 @@
 package leetcode;
 
-import org.hamcrest.core.Is;
-
 import java.util.HashMap;
 import java.util.Scanner;
 
