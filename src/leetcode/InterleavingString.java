@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class InterleavingString {
 	
-	private static Set<Integer> visited; // The combination of i1, i2 has been visited and return false
+	private static Set<Integer> visited; // The combination of i1, i2 has been onStack and return false
     public static boolean isInterleave(String s1, String s2, String s3) {
         if(s3.length() != s1.length() + s2.length())
             return false;
