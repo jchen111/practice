@@ -7,73 +7,52 @@ import java.util.*;
  */
 public class WordSquares {
     static List<List<String>> result;
-    static HashMap<Integer,HashSet<String>> dict;
+    static HashMap<String,List<String>> dict;
     public static List<List<String>> wordSquares(String[] words) { // n words, each word has length k
         result = new ArrayList<List<String>>();
         int wordsLen = words.length;
         if(wordsLen == 0) return result;
         int wordLen = words[0].length();
-        dict = new HashMap<Integer,HashSet<String>>();
+        dict = new HashMap<String,List<String>>();
 
-        for(int i = 0; i < wordLen; i++){ // O(k)
-            dict.put(i+1,new HashSet<String>());
-        }
-
-        // O(k*n)
+        // O(k*n) build possible prefixe dictionary, for more efficient way please reference Tire
         for(String s : words){
             for(int i = 0; i < wordLen; i++){
-                HashSet<String> set = dict.get(i+1);
-                set.add(s.substring(0,i+1));
-                dict.put(i+1,set);
+                String key = s.substring(0,i+1);
+                List<String> list = dict.containsKey(key)? dict.get(key): new ArrayList<String>();
+                list.add(s);
+                dict.put(key,list);
             }
         }
 
-        // O(k*n*n)
-        helper(wordLen, new ArrayList<String>(), words, new HashMap<Integer,String>());
+        // O(n*n) dfs
+        List<String> curList = new ArrayList<String>();
+        for(String word: words){
+            curList.add(word);
+            dfs(wordLen, curList, words);
+            curList.remove(curList.size()-1);
+        }
         return result;
     }
 
-    public static void helper(int wordLen, List<String> list, String[] pool, HashMap<Integer,String> vertical) {
-        if(list.size() == wordLen){
-            boolean feasible = true;
-            // O(k)
-            for(int i = 0; i < vertical.size(); i++){
-                if(!vertical.get(i).equals(list.get(i))){
-                    feasible = false;
-                    break;
-                }
-            }
-            if(feasible) result.add(list);
+    public static void dfs(int wordLen, List<String> curList, String[] pool) {
+        if(curList.size() == wordLen){
+            result.add(new ArrayList<String>(curList));
             return;
         }
 
-        ArrayList<String> sublist;
-        HashMap<Integer,String> tmpVertical;
-        //O(k*n)
-        for(String s : pool){ // O(n)
-            boolean feasible = true;
-            tmpVertical = new HashMap<Integer,String>(vertical);
-            sublist = new ArrayList<>(list);
-            for(int i = 0; i < s.length(); i++){ // O(k)
-                if(!tmpVertical.containsKey(i)) {
-                    if (!dict.get(list.size() + 1).contains("" + s.charAt(i))) {
-                        feasible = false;
-                        break;
-                    }
-                    tmpVertical.put(i,"" + s.charAt(i));
-                }else{
-                    String verticalString = tmpVertical.get(i) + s.charAt(i);
-                    if(!dict.get(list.size() + 1).contains(verticalString)){
-                        feasible = false;
-                        break;
-                    }
-                    tmpVertical.put(i, verticalString);
-                }
-            }
-            if(feasible) {
-                sublist.add(s);
-                helper(wordLen, new ArrayList<>(sublist), pool, tmpVertical);
-            }
+        StringBuilder prefix = new StringBuilder();
+        int col = curList.size();
+
+        for(String s: curList){
+            prefix.append(s.charAt(col));
+        }
+
+        List<String> startWith = dict.get(prefix.toString()) != null ? dict.get(prefix.toString()) : new ArrayList<String>();
+        for(String sw : startWith){
+            curList.add(sw);
+            dfs(wordLen,curList,pool);
+            curList.remove(curList.size()-1);
         }
     }
 
