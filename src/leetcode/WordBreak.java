@@ -5,25 +5,6 @@ import java.util.LinkedList;
 import java.util.Set;
 
 public class WordBreak {
-	//failed at last test case
-    public static boolean wordBreak(String s, Set<String> dict) {
-    	s = s.replace(" ", "");
-    	if(dict.contains(s)){
-    		return true;
-    	}
-        int length = s.length();
-        int i=1;
-        while(i<=length-1){
-        	String sub = s.substring(0, i);
-        	if(dict.contains(sub)){
-        		s = s.substring(i, length);
-        		if(s.isEmpty()) return true;
-        		else return wordBreak(s,dict);
-        	}
-        	i++;
-        }
-        return false;
-    }
     //correct solution
     public static boolean wordBreak2(String s, Set<String> dict){
     	if(s.isEmpty()) return false;
@@ -44,9 +25,17 @@ public class WordBreak {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Set<String> dict = new HashSet<String>();
-		String s = "fohhemkka";
-		dict.add("fo");
-		dict.add("fohhemkka");
+		String s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab";
+		dict.add("a");
+		dict.add("aa");
+		dict.add("aaa");
+		dict.add("aaaa");
+		dict.add("aaaaa");
+		dict.add("aaaaaa");
+		dict.add("aaaaaaa");
+		dict.add("aaaaaaaa");
+		dict.add("aaaaaaaaa");
+		dict.add("aaaaaaaaaa");
 		System.out.println(wordBreak2(s,dict));
 	}
 
