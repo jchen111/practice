@@ -51,14 +51,43 @@ public class SearchInRotatedSortedArray {
         return -1;
     }
 
+    public static int findRotation(int[] a) {
+        if(a.length < 2) return 0;
+        if(a.length == 2) {
+            if(a[0] < a[1]){
+                return 0;
+            }
+            return 1;
+        }
+
+        int low = 0;
+        int high = a.length - 1;
+
+        while(low + 1 < high){
+            int mid = (low + high) / 2;
+            if(a[mid] < a[low]){
+                high = mid;
+            }else if(a[mid] >= a[high]){
+                low = mid;
+            }else{
+                return 0; // no rotations found
+            }
+        }
+        return high;
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int target = sc.nextInt();
-        int[] arr = new int[N];
-        for(int i = 0; i < N; i++){
-            arr[i] = sc.nextInt();
+
+        while(true) {
+            int N = sc.nextInt();
+//        int target = sc.nextInt();
+            int[] arr = new int[N];
+            for (int i = 0; i < N; i++) {
+                arr[i] = sc.nextInt();
+            }
+//        System.out.println(search(arr,target));
+            System.out.println(findRotation(arr));
         }
-        System.out.println(search(arr,target));
     }
 }

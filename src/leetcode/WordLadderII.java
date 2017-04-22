@@ -1,99 +1,96 @@
 package leetcode;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 public class WordLadderII {
-	static Map<String,List<String>> map;
-    static List<List<String>> results;
-    public static List<List<String>> findLadders(String start, String end, Set<String> dict) {     
-        results= new ArrayList<List<String>>();
-        if (dict.size() == 0)
-            return results;
 
-        int min=Integer.MAX_VALUE;
-
-        Queue<String> queue= new ArrayDeque<String>();
-        queue.add(start);
-
-        map = new HashMap<String,List<String>>();
-
-        Map<String,Integer> ladder = new HashMap<String,Integer>();
-        dict.add(end);
-        for (String string:dict)
-            ladder.put(string, Integer.MAX_VALUE);
-        ladder.put(start, 0);
-
-        //BFS: Dijisktra search
-        while (!queue.isEmpty()) {
-
-            String word = queue.poll();
-
-            int step = ladder.get(word)+1;//'step' indicates how many steps are needed to travel to one word. 
-
-            if (step>min) break;
-
-            for (int i = 0; i < word.length(); i++){
-               StringBuilder builder = new StringBuilder(word); 
-                for (char ch='a';  ch <= 'z'; ch++){
-                    builder.setCharAt(i,ch);
-                    String new_word=builder.toString();             
-                    if (ladder.containsKey(new_word)) {
-
-                        if (step>ladder.get(new_word))//Check if it is the shortest path to one word.
-                            continue;
-                        else if (step<ladder.get(new_word)){
-                            queue.add(new_word);
-                            ladder.put(new_word, step);
-                        }else;// It is a KEY line. If one word already appeared in one ladder,
-                              // Do not insert the same word inside the queue twice. Otherwise it gets TLE.
-
-                        if (map.containsKey(new_word)) //Build adjacent Graph
-                            map.get(new_word).add(word);
-                        else{
-                            List<String> list= new LinkedList<String>();
-                            list.add(word);
-                            map.put(new_word,list);
-                            //It is possible to write three lines in one:
-                            //map.put(new_word,new LinkedList<String>(Arrays.asList(new String[]{word})));
-                        }
-
-                        if (new_word.equals(end))
-                            min=step;
-
-                    }//End if dict contains new_word
-                }//End:Iteration from 'a' to 'z'
-            }//End:Iteration from the first to the last
-        }//End While
-
-        //BackTracking
-        LinkedList<String> result = new LinkedList<String>();
-        backTrace(end,start,result);
-
-        return results;        
-    }
-    private static void backTrace(String word,String start,List<String> list){
-        if (word.equals(start)){
-            list.add(0,start);
-            results.add(new ArrayList<String>(list));
-            list.remove(0);
-            return;
+    static class Node {
+        String str;
+        int distance;
+        Node(String s, int dis) {
+            this.str = s;
+            this.distance = dis;
         }
-        list.add(0,word);
-        if (map.get(word)!=null){
-            for (String s:map.get(word))
-            {
-                backTrace(s,start,list);
+    }
+    // get only one path
+    public static List<String> findLadders(String beginWord, String endWord, Set<String> wordList) {
+        List<String> result = new LinkedList<String>();
+        Map<String,List<String>> graph = new HashMap<String,List<String>>();
+        Map<String,Integer> distance = new HashMap<String,Integer>();
+        Queue<String> queue = new LinkedList<String>();
+        Set<String> visited = new HashSet<String>();
+        int min = Integer.MAX_VALUE;
+
+        queue.add(endWord);
+        wordList.add(beginWord);
+        wordList.add(endWord);
+
+        for(String s : wordList){
+            distance.put(s,min);
+        }
+
+        distance.put(endWord,0);
+
+        //BFS build graph and distance map
+        while(!queue.isEmpty()){
+            String cur = queue.poll();
+            visited.add(cur);
+            int dis = distance.get(cur) + 1;
+            if(dis > min) break;
+
+            List<String> neighbors = getNeighbors(cur,wordList);
+            graph.put(cur,neighbors);
+            for(String neighbor : neighbors){
+                if(dis < distance.get(neighbor) && !visited.contains(neighbor)){
+                    queue.add(neighbor);
+                    distance.put(neighbor,dis);
+                }
+
+                if(neighbor.equals(beginWord)) min = dis;
+
             }
         }
-        list.remove(0);
+
+        result.add(beginWord);
+        queue = new LinkedList<String>();
+        queue.add(beginWord);
+        visited = new HashSet<String>();
+
+        while(!queue.isEmpty()){
+            String cur = queue.poll();
+            if(cur.equals(endWord)) break;
+            visited.add(cur);
+            PriorityQueue<Node> pq = new PriorityQueue<Node>(new Comparator<Node>() {
+                @Override
+                public int compare(Node o1, Node o2) {
+                    return o1.distance - o2.distance;
+                }
+            });
+            List<String> neighbors = getNeighbors(cur,wordList);
+            for(String s : neighbors){
+                if(!visited.contains(s)) pq.add(new Node(s,distance.get(s)));
+            }
+            Node tmp = pq.poll();
+            result.add(tmp.str);
+            queue.add(tmp.str);
+        }
+
+        return result;
+    }
+
+    private static List<String> getNeighbors(String s, Set<String> wordList) {
+        List<String> result = new ArrayList<String>();
+        char[] chs = s.toCharArray();
+        for(char c = 'a'; c <= 'z'; c++){
+            for(int i = 0; i < s.length(); i++){
+                char oldChar = chs[i];
+                chs[i] = c;
+                String str = new String(chs);
+                if(!str.equals(s) && wordList.contains(str)) result.add(str);
+                chs[i] = oldChar;
+            }
+        }
+        return result;
     }
     
 	public static void main(String[] args) {
@@ -103,12 +100,9 @@ public class WordLadderII {
 		Set<String> dict = new HashSet<String>();
 		dict.add("hot");dict.add("dot");dict.add("dog");
 		dict.add("lot");dict.add("log");
-		List<List<String>> res = findLadders(start,end,dict);
+		List<String> res = findLadders(start,end,dict);
 		for(int i=0;i<res.size();i++){
-			for(int j=0;j<res.get(i).size();j++){
-				System.out.print(res.get(i).get(j)+" ");
-			}
-			System.out.println();
+            System.out.print(res.get(i) +" ");
 		}
 	}
 
