@@ -16,7 +16,7 @@ public class BigIntProduct {
         num2 = num1.length() > num2.length()? num2 : tmp;
 
         int n = Math.max(num1.length()*num2.length(), num1.length() + num2.length());
-        int[][] sum = new int[num2.length()][n];
+        int[] sum = new int[n];
 
         int carry = 0;
 
@@ -25,26 +25,20 @@ public class BigIntProduct {
             int index = n - (num2.length() - j);
             for(int i = num1.length() - 1; i >= 0; i--){
                 int p1 = Character.getNumericValue(num1.charAt(i));
-                sum[num2.length() - 1 - j][index--] = ((p2 * p1) + carry) % 10;
-                carry = ((p2 * p1) + carry) / 10;
+                int newcarry = (sum[index] + ((p2 * p1) + carry)) / 10;
+                sum[index] = (sum[index] + ((p2 * p1) + carry)) % 10;
+                carry = newcarry;
+                index--;
             }
-            if(carry != 0) sum[num2.length() - 1 - j][index--] = carry;
+            if(carry != 0) sum[index--] = carry;
             carry = 0;
         }
 
-        for(int j = sum[0].length - 1; j >= 0; j--) {
-            int sub = 0;
-            for (int i = 0; i < sum.length; i++) {
-                sub += sum[i][j];
-            }
-            sb.insert(0, (sub + carry) % 10);
-            if(sub + carry <= 9) carry = 0;
-            else carry = 1;
+        for(int j = sum.length - 1; j >= 0; j--) {
+            sb.insert(0, sum[j]);
         }
 
-        if(carry != 0) sb.insert(0, carry);
-
-        while(sb.charAt(0) == '0') {
+        while(sb.charAt(0) == '0' && sb.length() > 1) {
             sb.deleteCharAt(0);
         }
 
