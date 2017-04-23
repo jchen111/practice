@@ -70,7 +70,7 @@ public class SearchInRotatedSortedArray {
             }else if(a[mid] >= a[high]){
                 low = mid;
             }else{
-                return 0; // no rotations found
+                return low; // no rotations found
             }
         }
         return high;

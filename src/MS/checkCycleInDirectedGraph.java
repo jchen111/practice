@@ -1,4 +1,4 @@
-package basicAlgorithm;
+package MS;
 
 import java.util.*;
 
