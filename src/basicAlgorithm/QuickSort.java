@@ -7,42 +7,37 @@ import java.util.Scanner;
  */
 public class QuickSort {
 
-    public static void quickSort(int[] arr, int left, int right) {
+    public static void quickSort(int[] arr) {
+        doSort(arr, 0, arr.length - 1);
+    }
 
-        int pivotIndex = left + (right - left) / 2;
-        int pivotValue = arr[pivotIndex];
+    private static void doSort(int[] arr, int lo, int hi) {
+        if(lo < hi) {
+            int pi = partition(arr, lo, hi);
 
-        int i = left, j = right;
-
-        while(i <= j) {
-
-            while(arr[i] < pivotValue) {
-                i++;
-            }
-
-            while(arr[j] > pivotValue) {
-                j--;
-            }
-
-            if(i <= j) {
-                int tmp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = tmp;
-                i++;
-                j--;
-                printArray(arr);
-            }
-
-            if(left < j) {
-                quickSort(arr, left, j);
-            }
-
-            if(right > i) {
-                quickSort(arr, i, right);
-            }
-
+            doSort(arr, lo, pi - 1);
+            doSort(arr, pi + 1, hi);
         }
+    }
 
+    private static int partition(int[] arr, int lo, int hi) {
+        int pivot = arr[hi];
+        int left = lo;
+        int right = lo;
+        while(right < hi) {
+            if(arr[right] < pivot) {
+                swap(arr, left++, right);
+            }
+            right++;
+        }
+        swap(arr, hi, left);
+        return left;
+    }
+
+    private static void swap(int[] arr, int i, int j) {
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
     }
 
     public static void printArray(int[] arr) {
@@ -53,15 +48,19 @@ public class QuickSort {
     }
 
     public static void main(String[] args) {
+        while(true) {
+
             Scanner sc = new Scanner(System.in);
             int N = sc.nextInt();
             int[] arr = new int[N];
+
             for (int i = 0; i < arr.length; i++) {
                 arr[i] = sc.nextInt();
             }
-            quickSort(arr, 0, N - 1);
-//            for (int i = 0; i < N; i++) {
-//                System.out.print(arr[i] + " ");
-//            }
+
+            quickSort(arr);
+
+            printArray(arr);
+        }
     }
 }
