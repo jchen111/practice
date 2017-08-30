@@ -92,11 +92,16 @@ public class WordLadderII {
         }
         return result;
     }
-    
+
+
+
+
+
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String start = "hit";
-		String end = "cog";
+		String start = "a";
+		String end = "c";
 		Set<String> dict = new HashSet<String>();
 		dict.add("hot");dict.add("dot");dict.add("dog");
 		dict.add("lot");dict.add("log");
