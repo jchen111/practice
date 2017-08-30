@@ -1,5 +1,8 @@
 package leetcode;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by jiaqichen on 10/16/16.
  */
@@ -15,7 +18,7 @@ public class GasStation {
      * @param cost
      * @return
      */
-    public int canCompleteCircuit(int[] gas, int[] cost) {
+    public static int canCompleteCircuit(int[] gas, int[] cost) {
         int totalGas = 0;
         int totalCost = 0;
         int tank = 0;
@@ -32,5 +35,11 @@ public class GasStation {
         }
         if(totalGas >= totalCost) return begin;
         else return -1;
+    }
+
+    public static void main(String[] args) {
+        int[] gas = {1,2};
+        int[] cost = {2,1};
+        canCompleteCircuit(gas,cost);
     }
 }

@@ -2,6 +2,7 @@ package leetcode;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -9,41 +10,39 @@ import java.util.Scanner;
  */
 public class FractionToRecurringDecimal {
     public static String fractionToDecimal(int numerator, int denominator) {
-        HashMap<Long,Integer> map = new HashMap<Long,Integer>();
-        if(numerator == denominator){
-            return "1";
+        int sign = 1;
+        if((numerator > 0 && denominator < 0) || (numerator < 0 && denominator > 0)) {
+            sign = -1;
         }
-        if(numerator == 0) return "0";
-        StringBuilder sb = new StringBuilder();
-        if((numerator < 0 && denominator > 0) || (numerator > 0 && denominator < 0)) {
-            sb.append("-");
+        long num = Math.abs(numerator);
+        long denomim = Math.abs((long)denominator);
+        String result = "";
+        Map<Long, Integer> map = new HashMap<Long, Integer>();
+        result += (num / denomim);
+        if(num % denomim == 0) {
+            return result;
         }
-        long lnumerator = numerator;
-        long ldenominator = denominator;
-        if(numerator < 0) lnumerator = Long.valueOf(-1)*Long.valueOf(numerator);
-        if(denominator < 0) ldenominator = Long.valueOf(-1)*Long.valueOf(denominator);
-
-        if(lnumerator % ldenominator == 0){
-            sb.append(lnumerator/ldenominator);
-        }else{
-            boolean flag = false;
-            while(lnumerator != 0){
-                if(map.containsKey(lnumerator)){
-                    sb.insert(map.get(lnumerator), "(");
-                    sb.append(")");
-                    break;
-                }else {
-                    map.put(lnumerator,sb.length());
-                    sb.append(lnumerator / ldenominator);
-                }
-                if(!flag) {
-                    sb.append(".");
-                    flag = true;
-                }
-                lnumerator = 10 * (lnumerator - ldenominator*(lnumerator/ldenominator));
+        result += ".";
+        num -= (num / denomim) * denomim;
+        if(num < denomim) {
+            num *= 10;
+        }
+        StringBuilder suffix = new StringBuilder();
+        while(!map.containsKey(num) ) {
+            suffix.append("" + (num / denomim));
+            map.put(num, suffix.length() - 1);
+            if(num % denomim == 0) {
+                return sign == -1 ? "-" + result + suffix : result + suffix;
+            }
+            num -= (num / denomim) * denomim;
+            if(num < denomim) {
+                num *= 10;
             }
         }
-        return sb.toString();
+        suffix.insert(map.get(num),"(");
+        suffix.append(")");
+        return sign == -1 ? "-" + result + suffix.toString() : result + suffix.toString();
+
     }
 
     public static void main(String[] args){

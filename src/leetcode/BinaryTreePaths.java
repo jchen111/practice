@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import static leetcode.PalindromePartitioning.list;
 
 /**
  * Created by jiaqichen on 10/23/16.
@@ -17,7 +16,7 @@ public class BinaryTreePaths {
     public static List<String> binaryTreePaths(TreeNode root) {
         stack = new Stack<TreeNode>();
         res = new ArrayList<String>();
-        if(root == null) return list;
+        if(root == null) return res;
         StringBuilder sb = new StringBuilder();
         sb.append(root.val);
         stack.push(root);

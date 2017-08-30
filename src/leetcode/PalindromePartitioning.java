@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,9 +35,11 @@ public class PalindromePartitioning {
     	}
     	return true;
     }
+
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		List<List<String>> res = partition("bb");
+		List<List<String>> res = partition("aaa");
 		for(int i=0;i<res.size();i++){
 			for(int j=0;j<res.get(i).size();j++){
 				System.out.print(res.get(i).get(j)+" ");
@@ -44,5 +47,7 @@ public class PalindromePartitioning {
 			System.out.println();
 		}
 	}
+
+
 
 }

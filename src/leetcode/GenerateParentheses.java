@@ -1,6 +1,8 @@
 package leetcode;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GenerateParentheses {
     public static List<String> generateParenthesis(int n) {
@@ -28,9 +30,10 @@ public class GenerateParentheses {
     		buildRest(leftnumber,rightnumber-1,current,result,count+1);
     	}
     }
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		List<String> result = generateParenthesis(4);
+		List<String> result = generateParenthesis(3);
 		for(int i=0;i<result.size();i++){
 			System.out.println(result.get(i));
 		}
