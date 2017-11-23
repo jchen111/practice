@@ -53,6 +53,5 @@ public class SpiralMatrix {
         Scanner sc  = new Scanner(System.in);
         sc.next();
         int[][] m = {{2, 5, 8 },{4,0,-1}};
-        spiralOrder(m);
     }
 }

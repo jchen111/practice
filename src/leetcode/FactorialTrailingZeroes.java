@@ -1,5 +1,8 @@
 package leetcode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class FactorialTrailingZeroes {
 	public static int trailingZeroes(int n) {
 		n = Math.abs(n);
@@ -14,9 +17,10 @@ public class FactorialTrailingZeroes {
 		}
 		return count;
     }
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println(trailingZeroes(10));
+		System.out.println();
 	}
 
 }

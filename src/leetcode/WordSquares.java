@@ -25,7 +25,7 @@ public class WordSquares {
             }
         }
 
-        // O(n*n) dfs
+        // O(n*n) backtracking
         List<String> curList = new ArrayList<String>();
         for(String word: words){
             curList.add(word);

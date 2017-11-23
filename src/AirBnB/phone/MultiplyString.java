@@ -1,52 +1,16 @@
-package leetcode;
-
-import java.util.Scanner;
+package AirBnB.phone;
 
 /**
- * Created by z001ktb on 10/13/16.
+ * Created by z001ktb
  */
 public class MultiplyString {
-//    public static String multiply(String num1, String num2) {
-//        if(num1.equals("0") || num2.equals("0")) return "0";
-//        StringBuilder sb = new StringBuilder();
-//        if(num1.isEmpty()|| num2.isEmpty()) return sb.toString();
-//        int col = num1.length() + num2.length();
-//        int[] grid = new int[col];
-//        if(num1.length() < num2.length()){
-//            String s = num1;
-//            num1 = num2;
-//            num2 = s;
-//        }
-//        int carry = 0;
-//        int k = 0;
-//        int colIndex = col-1-k;
-//        for(int i = num2.length() - 1; i >=0; i--){
-//            int n2 = Character.getNumericValue(num2.charAt(i));
-//            for(int j = num1.length() - 1; j >=0; j--){
-//                int n1 = Character.getNumericValue(num1.charAt(j));
-//                grid[colIndex] += (carry + n1*n2);
-//                carry = grid[colIndex]/10;
-//                grid[colIndex] %= 10;
-//                colIndex--;
-//            }
-//            if(carry != 0) {
-//                grid[colIndex] = carry;
-//                carry = 0;
-//            }
-//            k++;
-//            colIndex = col-1-k;
-//        }
-//
-//        if(grid[0] != 0) sb.append(grid[0]);
-//        for(int i = 1; i < grid.length; i++){
-//            sb.append(grid[i]);
-//        }
-//        return sb.toString();
-//    }
-
     public static String multiply(String str1, String str2) {
         if(str1 == null || str1.isEmpty()) return str2;
         if(str2 == null || str2.isEmpty()) return str1;
+        if(str1.equals("0") || str2.equals("0")) return "0";
+
+        boolean isPositive = (str1.charAt(0) == '-' && str2.charAt(0) == '-') || (str1.charAt(0) != '-' && str1.charAt(0) != '-');
+
         if(str1.length() < str2.length()) {
             String tmp = str1;
             str1 = str2;
@@ -58,7 +22,7 @@ public class MultiplyString {
         for(int j = str2.length() - 1; j >= 0; j--) {
             int p1 = Character.getNumericValue(str2.charAt(j));
             StringBuilder local = new StringBuilder();
-            for(int k = 0; k < str2.length() - 1 - j; k++) {
+            for(int k = 0; k < str2.length() - 1 - j; k++) { // pad zeros to local
                 local.append(0);
             }
             for(int i = str1.length() - 1; i >= 0; i--) {
@@ -72,6 +36,7 @@ public class MultiplyString {
             result = add(local.toString(), result);
             carry = 0;
         }
+        if(!isPositive) result = "-" + result;
         return result;
     }
 
@@ -110,12 +75,7 @@ public class MultiplyString {
         return sb.toString();
     }
 
-    public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
-        while(true) {
-            String s1 = sc.next();
-            String s2 = sc.next();
-            System.out.println(multiply(s1, s2));
-        }
+    public static void main(String[] args) {
+
     }
 }

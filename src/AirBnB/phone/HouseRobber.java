@@ -1,4 +1,4 @@
-package leetcode;
+package AirBnB.phone;
 
 import java.util.Scanner;
 

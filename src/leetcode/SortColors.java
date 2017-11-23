@@ -83,34 +83,57 @@ public class SortColors {
 //        return;
 //    }
 
-    public static void main() {
+    public static void sortColors(int[] nums) {
+        if(nums == null || nums.length == 0) return;
+        int low = 0;
+        int hi = nums.length - 1;
+        int i = 0;
+        while(i <= hi) {
+            if(nums[i] == 0) {
+                swap(nums, i, low++);
+            } else if (nums[i] == 2) {
+                swap(nums, i, hi--);
+                i--;
+            }
+            i++;
+        }
+    }
 
+    private static void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1,0,2,0,1,2,0,1};
+        sortColors(nums);
     }
 
     /*
     http://2hwp.com/LeetCode/75%20Sort%20Colors/
      */
-    public void sortColors(int[] A) {
-        if (A == null || A.length < 2) return;
-        int low = 0;
-        int high = A.length - 1;
-        for (int i = low; i <= high; ) {
-            if (A[i] == 0) {
-                // swap A[i] and A[low] and i,low both ++
-                int temp = A[i];
-                A[i] = A[low];
-                A[low] = temp;
-                i++;
-                low++;
-            } else if (A[i] == 2) {
-                //swap A[i] and A[high] and high--;
-                int temp = A[i];
-                A[i] = A[high];
-                A[high] = temp;
-                high--;
-            } else {
-                i++;
-            }
-        }
-    }
+//    public void sortColors(int[] A) {
+//        if (A == null || A.length < 2) return;
+//        int low = 0;
+//        int high = A.length - 1;
+//        for (int i = low; i <= high; ) {
+//            if (A[i] == 0) {
+//                // swap A[i] and A[low] and i,low both ++
+//                int temp = A[i];
+//                A[i] = A[low];
+//                A[low] = temp;
+//                i++;
+//                low++;
+//            } else if (A[i] == 2) {
+//                //swap A[i] and A[high] and high--;
+//                int temp = A[i];
+//                A[i] = A[high];
+//                A[high] = temp;
+//                high--;
+//            } else {
+//                i++;
+//            }
+//        }
+//    }
 }
